@@ -40,7 +40,7 @@ const App = () => {
   return (
     <div id="main">
       <h2>User List</h2>
-      <button onClick={fetchUsersData}>Fetch User Data</button>
+      <button className="fetch-data-btn" onClick={fetchUsersData}>Fetch User Data</button>
       {isLoading && <p>Loading...</p>}
       {!isLoading && users.length === 0 && <p>No users found.</p>}
       {!isLoading && users.length > 0 &&
@@ -48,20 +48,89 @@ const App = () => {
           <button className="sort-btn" onClick={sortUsersByNameLength}>
             {isAscending ? 'Sort by name length (ascending)' : 'Sort by name length (descending)'}
           </button>
-          {users.map(({ id, name, email }) => (
-            <div key={id} className="user">
-              <div className="id-section">{id}</div>
-              <p className="name">{name}</p>
-              <p className="email">{email}</p>
-            </div>
-          ))}
+
+          <div className='users-section'>
+            {users.map(({ id, name, email }) => (
+              <li>
+                <section className='id-section'>{id}</section>
+                <section className='name-email-section'>
+                  <p className='name'>{name}</p>
+                  <p className='email'>{email} </p>
+                </section>
+              </li>
+            ))}
+          </div>
+
         </div>
       }
     </div>
-  );
+  )
 }
-
 
 
 export default App;
 
+// import React, { useState, useEffect } from 'react';
+// import '../styles/App.css';
+
+// function App() {
+//   const [isLoading, setIsLoading] = useState(false);
+//   const [users, setUsers] = useState([]);
+//   const [isAscending, setIsAscending] = useState(true);
+
+//   const fetchUsersData = () => {
+//     setIsLoading(true);
+//     fetch('https://content.newtonschool.co/v1/pr/main/users')
+//       .then(response => response.json())
+//       .then(data => {
+//         setIsLoading(false);
+//         setUsers(data.map(({ id, name, email }) => ({ id, name, email })));
+//       })
+//       .catch(error => {
+//         console.error(error);
+//         setIsLoading(false);
+//       });
+//   };
+
+//   const sortUsersByNameLength = () => {
+//     setUsers(users => {
+//       const sortedUsers = [...users].sort((user1, user2) => {
+//         const nameLength1 = user1.name.length;
+//         const nameLength2 = user2.name.length;
+//         return isAscending ? nameLength1 - nameLength2 : nameLength2 - nameLength1;
+//       });
+//       setIsAscending(isAscending => !isAscending);
+//       return sortedUsers;
+//     });
+//   };
+
+//   useEffect(() => {
+//     setIsLoading(true);
+//     fetchUsersData();
+//   }, []);
+
+//   return (
+//     <div className="App">
+//       <h1>Users</h1>
+//       <button className="fetch-data-btn" onClick={fetchUsersData}>Fetch User Data</button>
+//       {isLoading && <p>Loading...</p>}
+//       {!isLoading && users.length === 0 && <p>No users found.</p>}
+//       {!isLoading && users.length > 0 &&
+//         <div>
+//           <button className="sort-btn" onClick={sortUsersByNameLength}>
+//             {isAscending ? 'Sort by name length (ascending)' : 'Sort by name length (descending)'}
+//           </button>
+//           {users.map(({ id, name, email }) => (
+//             <div key={id} className="user">
+//               <div className="id-section">{id}</div>
+//               <p className="name">{name}</p>
+//               <p className="email">{email}</p>
+//             </div>
+//           ))}
+//         </div>
+//       }
+//     </div>
+//   );
+// }
+
+// export default App;
